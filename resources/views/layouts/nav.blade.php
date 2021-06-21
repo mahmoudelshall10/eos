@@ -30,11 +30,7 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('welcome') ? '' : "text-white" }}" href="about.html">About</a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('welcome') ? '' : "text-white" }}" href="contact.html">Contact</a>
+            <a class="nav-link {{ request()->routeIs('about') ? '' : "text-white" }}" href="{{ route('about') }}">About</a>
           </li>
 
             @guest

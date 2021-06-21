@@ -26,4 +26,9 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    public function about_us()
+    {
+        return view('site.about_us');
+    }
 }

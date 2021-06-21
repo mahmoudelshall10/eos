@@ -41,6 +41,7 @@ class ProfileController extends Controller
                     'twitter_url'               => 'nullable|string',
                     'linkedIn_url'              => 'nullable|string',
                     'insta_url'                 => 'nullable|string',
+                    'description'               => 'nullable|string',
                 ];
 
                 $names = [
@@ -52,6 +53,7 @@ class ProfileController extends Controller
                     'twitter_url'               => 'Twitter URL',
                     'linkedIn_url'              => 'LinkedIn URL',
                     'insta_url'                 => 'Instagram URL',
+                    'description'               => 'Description',
                 ];
 
 

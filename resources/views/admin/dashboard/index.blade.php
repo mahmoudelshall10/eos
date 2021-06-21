@@ -1,4 +1,5 @@
 @extends('admin.layouts.app')
+@section('page-title') Dashboard @endsection
 @section('content')
 
 <!-- Breadcome start-->

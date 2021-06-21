@@ -145,7 +145,8 @@ return [
         'permissions',
         'roles',
         'teams',
-        'users'
+        'users',
+        'categories'
     ],
     
     'permissions' => 

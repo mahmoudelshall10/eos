@@ -44,6 +44,7 @@ class SettingsController extends Controller
             'icon'             => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', 
             'email'            => 'nullable|email',
             'phone'            => 'nullable|regex:/(01)[0-9]{9}/',
+            'about_us_desc'    => 'nullable'
         ];
 
         $names = 
@@ -55,6 +56,7 @@ class SettingsController extends Controller
             'icon'             =>'Icon', 
             'email'            =>'Email',
             'phone'            =>'Phone',
+            'about_us_desc'    =>'About Us description'
         ];
 
             if(request('phone') != null)
@@ -70,6 +72,7 @@ class SettingsController extends Controller
            $setting->put('meta_description' , request('meta_description'));
            $setting->put('meta_keywords' , request('meta_keywords'));
            $setting->put('email' , request('email'));
+           $setting->put('about_us_desc' , request('about_us_desc'));
 
 
 

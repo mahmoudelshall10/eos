@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-sm-3 text-center">
+    <div class="{{  Auth::user()->role->name == 'researcher' ? 'col-sm-3' : ''  }} text-center" style="display: {{ Auth::user()->role->name == 'researcher' ? 'inline-block' : 'none' }}">
         <br>
         <ul class="list-group">
             <li class="list-group-item text-muted">Reseachers <i class="fa fa-dashboard fa-1x"></i></li>
@@ -11,7 +11,7 @@
 
     </div>
     <!--/col-3-->
-    <div class="col-sm-9">
+    <div class="{{  Auth::user()->role->name == 'researcher' ? 'col-sm-9' : 'col-sm-12'  }}" >
         <div class="well">
             <div id="myTabContent" class="tab-content">
                 <div class="tab-pane active in" id="home">
@@ -115,6 +115,19 @@
                         </div>
                     </div>
                 </div>
+
+                @if(Auth::user()->role->name == 'researcher')
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-lg-12">
+                            <label for="description">
+                                <h4>Description</h4>
+                            </label>
+                            <textarea name="description" placeholder="What are you?" class="form-control" id="description" cols="10" rows="10">{{Auth::user()->description}}</textarea>
+                        </div>
+                    </div>
+                </div>
+                @endif
                 
                 <div class="form-group">
                     <div class="col-xs-12">

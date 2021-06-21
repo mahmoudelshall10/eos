@@ -1,5 +1,15 @@
 @extends('admin.layouts.app')
+@section('page-title') Settings @endsection
 @section('content')
+
+@push('admincss')
+    <link rel="stylesheet" href="{{url('admin_design')}}/css/summernote.css">
+@endpush
+
+@push('adminjs')
+    <script src="{{url('admin_design')}}/js/summernote.min.js"></script>
+    <script src="{{url('admin_design')}}/js/summernote-active.js"></script>
+@endpush
 
 <!-- Breadcome start-->
 <div class="breadcome-area mg-b-30 small-dn">
@@ -94,6 +104,16 @@
                                                     <input type="file" name="icon" id="icon">
                                                 </div>
                                                 
+                                            </div>
+
+                                            <hr>
+
+                                            <div class="form-group">
+                                            <label for="phone">About Us Description</label>
+                                            <br>
+                                                <div class="tinymce-single shadow-reset nt-mg-b-30">
+                                                    <textarea name="about_us_desc" id="summernote1">{{SiteSetting('about_us_desc')}}</textarea>
+                                                </div>
                                             </div>
 
 

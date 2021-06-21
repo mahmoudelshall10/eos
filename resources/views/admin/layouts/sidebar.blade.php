@@ -94,23 +94,29 @@
                 
                 @endcanany
 
-                @can(['admin.settings.index'])
+                @canany(['admin.categories.index','admin.categories.create'])
                     
-                <div class="left-custom-menu-adp-wrap">
-                    <ul class="nav navbar-nav left-sidebar-menu-pro">
-                        <li class="nav-item">
-                            <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
-                                <i class="fa fa-cogs" aria-hidden="true"></i> <span class="mini-dn">Settings</span> 
-                                <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span>
-                            </a>
-                            <div role="menu" class="dropdown-menu left-menu-dropdown animated flipInX">
-                                <a href="{{route('admin.settings.index')}}" class="dropdown-item">Index</a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                
-                @endcan
+                    <div class="left-custom-menu-adp-wrap">
+                        <ul class="nav navbar-nav left-sidebar-menu-pro">
+                            <li class="nav-item">
+                                <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
+                                    <i class="fa fa-list-alt"></i> <span class="mini-dn">Categories</span> 
+                                    <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span>
+                                </a>
+                                <div role="menu" class="dropdown-menu left-menu-dropdown animated flipInX">
+                                    @can('admin.categories.index')
+                                        <a href="{{route('admin.categories.index')}}" class="dropdown-item">Index</a>
+                                    @endcan
+                                     @can('admin.categories.create')
+                                        <a href="{{route('admin.categories.create')}}" class="dropdown-item">Create</a>
+                                    @endcan
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                @endcanany
+
 
                 @canany(['admin.users.index','admin.users.create'])
                     <div class="left-custom-menu-adp-wrap">
@@ -132,6 +138,25 @@
                         </ul>
                     </div>
                 @endcanany
+
+
+                @can(['admin.settings.index'])
+                    
+                    <div class="left-custom-menu-adp-wrap">
+                        <ul class="nav navbar-nav left-sidebar-menu-pro">
+                            <li class="nav-item">
+                                <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
+                                    <i class="fa fa-cogs" aria-hidden="true"></i> <span class="mini-dn">Settings</span> 
+                                    <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span>
+                                </a>
+                                <div role="menu" class="dropdown-menu left-menu-dropdown animated flipInX">
+                                    <a href="{{route('admin.settings.index')}}" class="dropdown-item">Index</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    @endcan
 
 
             </nav>

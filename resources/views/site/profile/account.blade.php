@@ -5,11 +5,10 @@
 @include('flash_messages')
 <div class="row text-center">
     <div class="col">
-        <h1>{{ ucfirst(Auth::user()->name) }}</h1>
+        <h1>{{ ucfirst(Auth::user()->name)}} - {{ucfirst(Auth::user()->role->name)}}</h1>
     </div>
 </div>
 
-@include('site.profile.tabs')
 @if(request('a') == 'general-info')
     @include('site.profile.general-info')
 @endif
