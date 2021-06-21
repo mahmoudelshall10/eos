@@ -1,0 +1,33 @@
+body {
+	/* position: relative;*/
+	background: url(../images/\(2\).jpg);
+	background-repeat: no-repeat;
+  background-attachment: fixed;
+	background-size: cover;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	box-sizing: border-box;
+	min-height: 100vh;
+}
+.container1
+{
+    background-color: hsla(0, 0%, 95%, 90%);
+    margin-top: 30px;
+    width: 90hv;
+    padding: 30px;
+    border-radius: 25px;
+
+}
+
+.inline
+{
+    display: inline-block
+}
+
+.footer1
+{
+margin-top: 10%;
+
+
+}
