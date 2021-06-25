@@ -10,12 +10,15 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
 
 
-        <div class="input-group ">
-          <input type="text" class="form-control " placeholder="Search for...">
-          <span class="input-group-append">
-            <button class="btn btn-primary" type="button">Go!</button>
-          </span>
-        </div>
+
+        <form action="{{url('search')}}" method="get" class="form-inline ">
+            <div class="form-group mx-sm-3">
+              <label for="Search" class="sr-only">Search</label>
+              <input type="password" class="form-control" name='search' id="Search" placeholder="Search...">
+            </div>
+            <button type="submit" class="btn btn-primary">GO!</button>
+          </form>
+
 
 
         <ul class="navbar-nav ml-auto">

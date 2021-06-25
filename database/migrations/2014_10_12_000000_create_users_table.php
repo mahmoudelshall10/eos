@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('photo')->nullable();
             $table->string('phone',11)->nullable();
 
-            $table->string('description');
+            $table->string('description')->nullable();
             
 
             $table->enum('gender',['male','female'])->nullable();

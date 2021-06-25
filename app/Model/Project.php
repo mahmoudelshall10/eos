@@ -12,6 +12,7 @@ class Project extends Model
     [
         'name' 
         ,'uuid'
+        ,'status'
         ,'description'
         ,'created_by'  // who uploads this projects admin or researcher
         ,'researcher_id' // who belongs this project
@@ -37,6 +38,31 @@ class Project extends Model
     {
         return $this->belongsToMany(Category::class,'project_categories')->withTimestamps();
     }
+
+    public function users()
+    {
+        return $this->belongsToMany(ProjectUsers::class,'project_users','project_id','user_id')
+        ->withPivot(['status'])
+        ->withTimestamps();
+    }
+
+    public function scopeSearch($q)
+    {
+        $query = request()->search;
+        return empty($query) ? $q : 
+        $q->where('name', 'LIKE', "%{$query}%")
+        ->orWhere('description', 'LIKE', "%{$query}%")
+        ->orWhereHas('categories', function ($qu) use ($query) {
+            $qu->where('name', 'LIKE', "%{$query}%");
+        })
+        ;
+        
+    }
+
+    protected $casts = [
+        'status' => 'enum',
+    ];
+
 
 
 }

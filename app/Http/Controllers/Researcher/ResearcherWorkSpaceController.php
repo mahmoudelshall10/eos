@@ -93,11 +93,12 @@ class ResearcherWorkSpaceController extends Controller
 
                 $imageSaveAsName = $file->getClientOriginalName();
 
-                $file = Image::make($file->getRealPath());
+                // $file = Image::make($file->getRealPath());
                 
                 $image_url = $directory . $imageSaveAsName;
-                
-                $file->save(public_path($directory .$imageSaveAsName));
+
+                // $file->move(public_path($directory), $imageSaveAsName);
+                $file->move(public_path($directory), $imageSaveAsName);
 
                 $project_file             = new ProjectFiles;
                 $project_file->name       = $imageSaveAsName; 
@@ -257,11 +258,13 @@ class ResearcherWorkSpaceController extends Controller
 
                 $imageSaveAsName = $file->getClientOriginalName();
 
-                $file = Image::make($file->getRealPath());
+                // $file = Image::make($file->getRealPath());
                 
                 $image_url = $directory . $imageSaveAsName;
                 
-                $file->save(public_path($directory .$imageSaveAsName));
+                // $file->save(public_path($directory .$imageSaveAsName));
+
+                $file->move(public_path($directory), $imageSaveAsName);
 
                 $project_file             = new ProjectFiles;
                 $project_file->name       = $imageSaveAsName; 
@@ -315,11 +318,12 @@ class ResearcherWorkSpaceController extends Controller
 
             $imageSaveAsName = $file_path->getClientOriginalName();
 
-            $file_path = Image::make($file_path->getRealPath());
+            // $file_path = Image::make($file_path->getRealPath());
             
             $image_url = $directory . $imageSaveAsName;
             
-            $file_path->save(public_path($directory . $imageSaveAsName));
+            // $file_path->save(public_path($directory . $imageSaveAsName));
+            $file_path->move(public_path($directory), $imageSaveAsName);
 
             $data['name']           = $imageSaveAsName;
             $data['file_path']      = $image_url;

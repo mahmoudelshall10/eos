@@ -16,7 +16,6 @@ use Webpatser\Uuid\Uuid;
 
 class ProjectController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('permission:
@@ -50,8 +49,9 @@ class ProjectController extends Controller
     public function create()
     {
         $researchers = User::where('role_id',2)->get();
+        $users = User::where('role_id',3)->get();
         $categories  = Category::get(); 
-        return view('admin.projects.create',compact(['researchers','categories']));
+        return view('admin.projects.create',compact(['researchers','categories','users']));
     }
 
     /**
@@ -70,8 +70,16 @@ class ProjectController extends Controller
             'category_id'      => 'required|array',
             'category_id.*'    => 'required|integer|exists:categories,id',
             'project_files'    => 'required|array',
-            'project_files.*'  => 'required|mimes:jpeg,png,jpg,gif,svg,pdf,csv,doc,docx,xls,xlsx,ppt|max:4096'
+            'project_files.*'  => 'required|mimes:jpeg,png,jpg,gif,svg,pdf,csv,doc,docx,xls,xlsx,ppt|max:4096',
+            'status'           => 'required|string|in:hidden,specific_users,all_users',
+            'user_id'          => 'nullable|array',
         ];
+
+        if($request->status === "specific_users" && $request->user_id)
+        {
+            $rule['user_id']      = 'required|array';
+            $rule['user_id.*']    = 'required_if:role_id,3|integer|exists:users,id';
+        }
 
         $names = 
         [
@@ -80,6 +88,8 @@ class ProjectController extends Controller
             'category_id'      => 'Category',
             'researcher_id'    => 'Researcher',
             'project_files'    => 'Project Files',
+            'status'           => 'Status',
+            'user_id'          => 'User'
         ];
 
         $this->validate($request, $rules , [],$names);
@@ -87,6 +97,7 @@ class ProjectController extends Controller
         
         $project                = new Project();
         $project->name          = $request->name;
+        $project->status        = $request->status;
         $project->description   = $request->description;
         $project->researcher_id = $request->researcher_id;
         $project->uuid          = (string)Uuid::generate();
@@ -100,18 +111,26 @@ class ProjectController extends Controller
             {
                 $directory = 'storage/app/project_files/';
 
+                if (!file_exists($directory)) {
+  
+                    mkdir($directory, 755, true);
+                }
+
                 $uuid = (string)Uuid::generate();
 
-                $imageSaveAsName = $file->getClientOriginalName();
+                $filename        = $file->getClientOriginalName();
+                
+                $imageSaveAsName = time() . $uuid . $file->getClientOriginalName();
 
-                $file = Image::make($file->getRealPath());
+                // $file = Image::make($file->getRealPath());
                 
                 $image_url = $directory . $imageSaveAsName;
                 
-                $file->save(public_path($directory .$imageSaveAsName));
+                // $file->save(public_path($directory .$imageSaveAsName));
+                $file->move(public_path($directory), $imageSaveAsName);
 
                 $project_file             = new ProjectFiles;
-                $project_file->name       = $imageSaveAsName; 
+                $project_file->name       = $filename; 
                 $project_file->uuid       = $uuid; 
                 $project_file->project_id = $project->id; 
                 $project_file->file_path  = $image_url; 
@@ -120,6 +139,10 @@ class ProjectController extends Controller
             }
         }
 
+        if($request->status === "specific_users" && $request->user_id)
+        {
+            $project->users()->attach($request->user_id,['status' => 'allowed']);
+        }
 
         $project->categories()->attach($request->category_id);
 
@@ -266,19 +289,27 @@ class ProjectController extends Controller
             foreach($request->project_files as $file) 
             {
                 $directory = 'storage/app/project_files/';
+                
+                if (!file_exists($directory)) {
+  
+                    mkdir($directory, 755, true);
+                }
 
                 $uuid = (string)Uuid::generate();
 
-                $imageSaveAsName = $file->getClientOriginalName();
+                $filename        = $file->getClientOriginalName();
 
-                $file = Image::make($file->getRealPath());
+                $imageSaveAsName = time() . $uuid . $file->getClientOriginalName();
+
+                // $file = Image::make($file->getRealPath());
                 
                 $image_url = $directory . $imageSaveAsName;
                 
-                $file->save(public_path($directory .$imageSaveAsName));
+                // $file->save(public_path($directory .$imageSaveAsName));
+                $file->move(public_path($directory), $imageSaveAsName);
 
                 $project_file             = new ProjectFiles;
-                $project_file->name       = $imageSaveAsName; 
+                $project_file->name       = $filename; 
                 $project_file->uuid       = $uuid; 
                 $project_file->project_id = $project->id; 
                 $project_file->file_path  = $image_url; 
@@ -305,6 +336,7 @@ class ProjectController extends Controller
 
         $project = Project::find($project_id);
         $file    = ProjectFiles::findOrFail($file_id);
+        $uuid    = $file->uuid; 
 
         $rules = 
         [
@@ -327,15 +359,18 @@ class ProjectController extends Controller
 
             $directory = 'storage/app/project_files/';
 
-            $imageSaveAsName = $file_path->getClientOriginalName();
+            $filename        = $file_path->getClientOriginalName();
 
-            $file_path = Image::make($file_path->getRealPath());
+            $imageSaveAsName = time() . $uuid . $file_path->getClientOriginalName();
+
+            // $file_path = Image::make($file_path->getRealPath());
             
             $image_url = $directory . $imageSaveAsName;
             
-            $file_path->save(public_path($directory . $imageSaveAsName));
+            // $file_path->save(public_path($directory . $imageSaveAsName));
+            $file_path->move(public_path($directory), $imageSaveAsName);
 
-            $data['name']           = $imageSaveAsName;
+            $data['name']           = $filename;
             $data['file_path']      = $image_url;
         }
 

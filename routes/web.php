@@ -24,6 +24,12 @@ Auth::routes();
 // Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/about', 'HomeController@about_us')->name('about');
 
+Route::get('/search', 'SearchController@search')->name('search');
+
+Route::get('/project/{uuid}','SearchController@singleProject')->name('singleProject');
+Route::get('/download/{file_uuid}', 'SearchController@getDownload')->name('download');
+
+
 Route::group(['namespace'=>'Site', 'as' => 'site.'] , function(){
     Route::get('/team-members', 'TeamController@index')->name('teamMember');
     //account
@@ -52,4 +58,6 @@ Route::group(['namespace' => 'Researcher' , 'prefix' => 'researcher' , 'as' => '
         Route::patch('/{workspace_id}/files/{file_id}','ResearcherWorkSpaceController@updateProjectFiles')->name('workspaces.files.update');
         Route::Delete('/{workspace_id}/files/{file_id}','ResearcherWorkSpaceController@deleteProjectFiles')->name('workspaces.files.destroy');
     });
+
+    Route::resource('/filespermissions','ResearcherFilePermissionController');
 });

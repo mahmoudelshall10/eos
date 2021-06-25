@@ -26,7 +26,11 @@ class LoginController extends Controller
      *
      * @var string
      */
-    // protected $redirectTo = '/';
+    
+        protected function redirectTo()
+        {
+            return '/' . Auth::user()->role->name;
+        }
 
     /**
      * Create a new controller instance.
@@ -38,8 +42,5 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    protected function redirectTo()
-    {
-        return '/' . Auth::user()->role->name;
-    }
+
 }
