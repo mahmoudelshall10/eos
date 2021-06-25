@@ -36,8 +36,6 @@ use Illuminate\Http\Request;
 
                 $image_url = $directory . $imageSaveAsName;  
                  
-                // $success = $img->move($directory, $imageSaveAsName); 
-
                 $img->save(public_path($directory .$imageSaveAsName));
             }
             return $image_url;

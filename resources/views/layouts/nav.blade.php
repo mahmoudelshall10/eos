@@ -83,6 +83,10 @@
 
                     <a href="{{url('profile?a=change-image')}}" class="dropdown-item">Change Image</a>
 
+                    @if(Auth::user()->role_id == 2)
+                      <a href="{{route('researcher.workspaces.index')}}" class="dropdown-item">Projects Dashboard</a>
+                    @endif
+
                     
                     <a class="dropdown-item" href="{{ route('logout') }}"
                         onclick="event.preventDefault();

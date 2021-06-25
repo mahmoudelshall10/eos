@@ -76,8 +76,10 @@ class ProfileController extends Controller
 
                 if (Hash::check(request('old_password'), $user->password)) { 
 
+                    $data['password'] = Hash::make(request('password'));
+                    
                     $user->update([
-                        'password' => Hash::make(request('password'))
+                        'password' => $data['password']
                     ]);
                     
                     Session::flash('success','Password Changed');

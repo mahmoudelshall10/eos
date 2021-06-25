@@ -71,8 +71,7 @@
                 
                 @endcanany
 
-                @canany(['admin.teams.index','admin.teams.create'])
-                    
+                @canany(['admin.teams.index','admin.teams.create'])   
                 <div class="left-custom-menu-adp-wrap">
                     <ul class="nav navbar-nav left-sidebar-menu-pro">
                         <li class="nav-item">
@@ -91,7 +90,27 @@
                         </li>
                     </ul>
                 </div>
-                
+                @endcanany
+
+                @canany(['admin.projects.index','admin.projects.create'])   
+                <div class="left-custom-menu-adp-wrap">
+                    <ul class="nav navbar-nav left-sidebar-menu-pro">
+                        <li class="nav-item">
+                            <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
+                                <i class="fa fa-tasks"></i> <span class="mini-dn">Projects</span> 
+                                <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span>
+                            </a>
+                            <div role="menu" class="dropdown-menu left-menu-dropdown animated flipInX">
+                                @can('admin.projects.index')
+                                    <a href="{{route('admin.projects.index')}}" class="dropdown-item">Index</a>
+                                @endcan
+                                 @can('admin.projects.create')
+                                    <a href="{{route('admin.projects.create')}}" class="dropdown-item">Create</a>
+                                @endcan
+                            </div>
+                        </li>
+                    </ul>
+                </div>
                 @endcanany
 
                 @canany(['admin.categories.index','admin.categories.create'])

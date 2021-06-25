@@ -61,8 +61,13 @@
                                         <td>{{$team_member->job_title}}</td>
                                         <td>{{$team_member->createdBy->name}}</td>
                                         <td>
+                                            @can('admin.teams.show')
                                             <a href="{{route('admin.teams.show',$team_member->id)}}"><i class="fa fa-eye"></i></a>
+                                            @endcan
+                                            @can('admin.teams.edit')
                                             <a href="{{route('admin.teams.edit',$team_member->id)}}"><i class="fa fa-pencil"></i></a>
+                                            @endcan
+                                            @can('admin.teams.destroy')
                                             <a href="#deModal{{$team_member->id}}" data-toggle="modal"><i class="fa fa-trash"></i></a>
                                             <div class="modal fade" id="deModal{{$team_member->id}}" role="dialog">
                                                 <div class="modal-dialog" role="document">
@@ -87,6 +92,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            @endcan
                                         </td>
                                     </tr>
                                     @endforeach

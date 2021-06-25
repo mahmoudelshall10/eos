@@ -42,4 +42,14 @@ Route::group(['namespace' => 'Normaluser' , 'prefix' => 'user' , 'as' => 'user.'
 
 Route::group(['namespace' => 'Researcher' , 'prefix' => 'researcher' , 'as' => 'researcher.' ] ,function(){
     Route::get('/','ResearcherHomeController@index')->name('home');
+
+    Route::resource('/workspaces', 'ResearcherWorkSpaceController');
+    Route::prefix('workspaces')->group(function (){
+        Route::get('/{workspace_id}/files','ResearcherWorkSpaceController@indexProjectFiles')->name('workspaces.files.index');
+        Route::get('/{workspace_id}/files/create','ResearcherWorkSpaceController@createProjectFiles')->name('workspaces.files.create');
+        Route::post('/{workspace_id}/files','ResearcherWorkSpaceController@storeProjectFiles')->name('workspaces.files.store');
+        Route::get('/{workspace_id}/files/{file_id}/edit','ResearcherWorkSpaceController@editProjectFiles')->name('workspaces.files.edit');
+        Route::patch('/{workspace_id}/files/{file_id}','ResearcherWorkSpaceController@updateProjectFiles')->name('workspaces.files.update');
+        Route::Delete('/{workspace_id}/files/{file_id}','ResearcherWorkSpaceController@deleteProjectFiles')->name('workspaces.files.destroy');
+    });
 });

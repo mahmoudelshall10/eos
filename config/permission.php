@@ -146,7 +146,9 @@ return [
         'roles',
         'teams',
         'users',
-        'categories'
+        'categories',
+        'projects',
+        'projects.files'
     ],
     
     'permissions' => 

@@ -12,12 +12,16 @@ class PermissionsTableSeeder extends Seeder
      *
      * @return void
      */
-    public $list = ['dashboards.index','settings.index','profile','generalInfo','changeImage'
+    public $admin = ['dashboards.index','settings.index','profile','generalInfo','changeImage'
                     ,'changePassword','site.profile','site.generalInfo','site.changeImage'
                     ,'site.changePassword'];
     
-    public $researcher = ['researcher.home'];
-    
+    public $researcher = [
+        'home','workspaces.index','workspaces.create','workspaces.edit','workspaces.destroy',
+        'workspaces.files.index','workspaces.files.create','workspaces.files.edit',
+        'workspaces.files.destroy'
+    ];
+
     public $user       = ['user.home'];
 
 
@@ -38,7 +42,7 @@ class PermissionsTableSeeder extends Seeder
             }
         }
         
-        foreach($this->list as $i)
+        foreach($this->admin as $i)
         {
             $permission = Permission::create([
                 'name' => 'admin.' . $i,
@@ -53,7 +57,7 @@ class PermissionsTableSeeder extends Seeder
         foreach($this->researcher as $i)
         {
             $permission = Permission::create([
-                'name' => $i,
+                'name' => 'researcher.' . $i,
                 'guard_name' => 'web'
                 ]);
 

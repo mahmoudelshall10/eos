@@ -13,4 +13,9 @@ class Category extends Model
     {
         return $this->hasOne(User::class, 'id', 'created_by');
     }
+
+    public function categories()
+    {
+        return $this->belongsToMany(Project::class,'projects_categories')->withTimestamps();
+    }
 }
