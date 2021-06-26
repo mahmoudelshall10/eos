@@ -17,6 +17,8 @@
         $('#status').on('change', function() {
                 if(this.value == 'specific_users'){
                     users_div.show();
+                }else{
+                    users_div.hide(); 
                 }
             });
         });

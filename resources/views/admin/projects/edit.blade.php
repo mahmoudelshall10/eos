@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
-@section('page-title') Create Project @endsection
+@section('page-title') Edit Project @endsection
 @section('content')
 
 @push('admincss')
@@ -9,6 +9,25 @@
 @push('adminjs')
     <script src="{{url('admin_design')}}/js/chosen/chosen.jquery.js"></script>
     <script src="{{url('admin_design')}}/js/chosen/chosen-active.js"></script>
+    <script>
+    $(document).ready(function(){
+        var users_div = $('#users_div');
+        users_div.hide();
+        if($('#status').val() == 'specific_users')
+        {
+            users_div.show();
+        }else{
+            users_div.hide(); 
+        }
+        $('#status').on('change', function() {
+                if(this.value == 'specific_users'){
+                    users_div.show();
+                }else{
+                    users_div.hide(); 
+                }
+            });
+        });
+    </script>
 @endpush
 
 <!-- Breadcome start-->
@@ -30,7 +49,7 @@
                                     <a href="{{route('admin.projects.index')}}">Project</a> /
                                 </li>
                                 @endcan
-                                <li><span class="bread-blod">Create</span></li>
+                                <li><span class="bread-blod">Edit</span></li>
                             </ul>
                         </div>
                     </div>
@@ -89,6 +108,29 @@
                                                             <option value="{{ $category->id }}">{{ ucfirst($category->name) }}</option>
                                                         @endif
                                                     @endforeach
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group col-lg-12">
+                                                <label>Project Status</label>
+                                                <select id="status" class="form-control chosen-select" name="status">
+                                                    <option value="">Choose Status</option>
+                                                    @foreach(['hidden' => "Hidden", 'specific_users' => "Specific Users", 'all_users' => "All Users"] as $status => $name)    
+                                                        <option value="{{ $status }}" {{$project->status == $status ? "selected" : "" }}>{{ $name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group col-lg-12" id="users_div">
+                                                <label>Users</label>
+                                                <select id="user" class="form-control chosen-select" name="user_id[]" multiple="multiple">
+                                                @foreach ($users as $user)
+                                                    @if(in_array($user->id, $userIds))
+                                                        <option value="{{ $user->id }}"  selected>{{ ucfirst($user->email) }}</option>
+                                                    @else
+                                                        <option value="{{ $user->id }}">{{ ucfirst($user->email) }}</option>
+                                                    @endif
+                                                @endforeach
                                                 </select>
                                             </div>
 

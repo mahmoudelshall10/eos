@@ -14,7 +14,7 @@
         <form action="{{url('search')}}" method="get" class="form-inline ">
             <div class="form-group mx-sm-3">
               <label for="Search" class="sr-only">Search</label>
-              <input type="password" class="form-control" name='search' id="Search" placeholder="Search...">
+              <input type="text" class="form-control" name='search' id="Search" placeholder="Search...">
             </div>
             <button type="submit" class="btn btn-primary">GO!</button>
           </form>

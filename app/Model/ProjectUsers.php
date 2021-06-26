@@ -6,11 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProjectUsers extends Model
 {
+    // protected $table = 'project_users';
     protected $fillable = 
     [
         'project_id',
         'user_id',
-        'status'
+        // 'status'
     ];
 
     public function project()
@@ -20,6 +21,6 @@ class ProjectUsers extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'id', 'user_id')->where('role_id',3);
+        return $this->belongsTo(User::class, 'id', 'user_id');
     }
 }

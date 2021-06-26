@@ -19,6 +19,10 @@ class Project extends Model
 
     ];
 
+    const HIDDEN        = 'hidden';
+    const ALLUSERS      = 'all_users';
+    const SPECIFICUSERS = 'specific_users';
+
     public function createdBy()
     {
         return $this->hasOne(User::class, 'id', 'created_by');
@@ -46,6 +50,13 @@ class Project extends Model
         ->withTimestamps();
     }
 
+    // public function manyUsers()
+    // {
+    //     return $this->hasMany(ProjectUsers::class,'project_id','user_id');
+    //     // return $this->belongsToMany(ProjectUsers::class,'project_users','project_id','user_id')
+    //     // ->withTimestamps();
+    // }
+
     public function scopeSearch($q)
     {
         $query = request()->search;
@@ -54,8 +65,7 @@ class Project extends Model
         ->orWhere('description', 'LIKE', "%{$query}%")
         ->orWhereHas('categories', function ($qu) use ($query) {
             $qu->where('name', 'LIKE', "%{$query}%");
-        })
-        ;
+        });
         
     }
 

@@ -2,6 +2,25 @@
 @section('page-title') Index Project @endsection
 @section('content')
 
+@push('admincss')
+    <!-- <link rel="stylesheet" href="{{url('admin_design')}}/css/chosen/bootstrap-chosen.css"> -->
+@endpush
+
+@push('adminjs')
+    <!-- <script src="{{url('admin_design')}}/js/chosen/chosen.jquery.js"></script>
+    <script src="{{url('admin_design')}}/js/chosen/chosen-active.js"></script> -->
+    <script>
+    $(document).ready(function(){
+        var users_div = $('#users_div');
+        users_div.hide();
+        $('#status').on('change', function() {
+                if(this.value == 'specific_users'){
+                    users_div.show();
+                }
+            });
+        });
+    </script>
+@endpush
 
 <!-- Breadcome start-->
 <div class="breadcome-area mg-b-30 small-dn">

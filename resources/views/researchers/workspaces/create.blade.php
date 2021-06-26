@@ -2,6 +2,21 @@
 @section('page-title') Create Project @endsection
 @section('content')
 
+@push('sitejs')
+   <script>
+    $(document).ready(function(){
+        var users_div = $('#users_div');
+        users_div.hide();
+        $('#status').on('change', function() {
+                if(this.value == 'specific_users'){
+                    users_div.show();
+                }else{
+                    users_div.hide(); 
+                }
+            });
+        });
+    </script>
+@endpush
 
 @include('flash_messages')
 
@@ -35,6 +50,26 @@
                                                 <select name="category_id[]" id="category_id" class="form-control  @error('category_id') is-invalid @enderror"  multiple="multiple">
                                                     @foreach ($categories as $category)
                                                         <option value="{{ $category->id }}"  {{ old("category_id") == $category->id ? "selected" : "" }}>{{ ucfirst($category->name) }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group col-lg-12">
+                                                <label>Project Status</label>
+                                                    <select id="status" class="form-control chosen-select" name="status">
+                                                        <option value="">Choose Status</option>
+                                                        @foreach(['hidden' => "Hidden", 'specific_users' => "Specific Users", 'all_users' => "All Users"] as $status => $name)    
+                                                            <option value="{{ $status }}" {{ old("status") == $status ? "selected" : "" }}>{{ $name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                            </div>
+
+                                            <div class="form-group col-lg-12" id="users_div">
+                                                <label>Users</label>
+                                                <select id="user" class="form-control chosen-select" name="user_id[]" multiple="multiple">
+                                                    <option value="">Choose Users</option>
+                                                    @foreach ($users as $user)
+                                                        <option value="{{ $user->id }}"{{ !empty(old('user_id')) && in_array($user->id, old('user_id')) ? ' selected="selected"' : '' }}>{{ $user->email }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>

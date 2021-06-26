@@ -27,8 +27,9 @@ use Illuminate\Support\Facades\Auth;
         Route::post('users/updatePassword/{id}', 'UserController@updatePassword')->name('users.updatePassword');
         //users
         //projects
-        Route::resource('/projects', 'ProjectController');
+        Route::resource('/projects', 'ProjectController'); 
         Route::prefix('projects')->group(function (){
+            Route::post('/update-permission/{project_id}','ProjectController@updatePermission')->name('projects.updatePermission');
             Route::get('/{project_id}/files','ProjectController@indexProjectFiles')->name('projects.files.index');
             Route::get('/{project_id}/files/create','ProjectController@createProjectFiles')->name('projects.files.create');
             Route::post('/{project_id}/files','ProjectController@storeProjectFiles')->name('projects.files.store');

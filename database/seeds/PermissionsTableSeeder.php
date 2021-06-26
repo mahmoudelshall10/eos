@@ -12,9 +12,7 @@ class PermissionsTableSeeder extends Seeder
      *
      * @return void
      */
-    public $admin = ['dashboards.index','settings.index','profile','generalInfo','changeImage'
-                    ,'changePassword','site.profile','site.generalInfo','site.changeImage'
-                    ,'site.changePassword'];
+    public $admin = ['dashboards.index','settings.index','profile','generalInfo','changeImage','changePassword','projects.updatePermission'];
     
     public $researcher = [
         'home','workspaces.index','workspaces.create','workspaces.edit','workspaces.destroy',
@@ -80,10 +78,6 @@ class PermissionsTableSeeder extends Seeder
 
             $role3->permissions()->save($permission);
         }
-
-        
-
-
 
     }
 }

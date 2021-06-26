@@ -26,7 +26,21 @@ Route::get('/about', 'HomeController@about_us')->name('about');
 
 Route::get('/search', 'SearchController@search')->name('search');
 
-Route::get('/project/{uuid}','SearchController@singleProject')->name('singleProject');
+Route::get('/pending', function () {
+    return view('pending');
+})->name('pending');
+
+Route::get('/permission-to-access', function () {
+    return view('permission-access');
+})->name('permissionToAccess');
+
+Route::post('/permission','SearchController@accessPermission')->name('accessPermission');
+
+Route::group(['middleware'=>'visibility'] ,function(){
+    Route::get('/project/{uuid}','SearchController@singleProject')->name('singleProject');
+});
+
+ 
 Route::get('/download/{file_uuid}', 'SearchController@getDownload')->name('download');
 
 

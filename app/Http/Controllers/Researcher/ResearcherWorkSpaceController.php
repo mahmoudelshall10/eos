@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Model\Category;
 use App\Model\ProjectCategory;
 use App\Model\ProjectFiles;
+use App\Model\ProjectUsers;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -41,7 +42,8 @@ class ResearcherWorkSpaceController extends Controller
     public function create()
     {
         $categories  = Category::get(); 
-        return view('researchers.workspaces.create',compact(['categories']));
+        $users = User::where('role_id',3)->get();
+        return view('researchers.workspaces.create',compact(['categories','users']));
     }
 
     
@@ -62,6 +64,12 @@ class ResearcherWorkSpaceController extends Controller
             'project_files'    => 'required|array',
             'project_files.*'  => 'required|mimes:jpeg,png,jpg,gif,svg,pdf,csv,doc,docx,xls,xlsx,ppt|max:4096'
         ];
+
+        if($request->status === "specific_users")
+        {
+            $rules['user_id']      = 'required|array';
+            $rules['user_id.*']    = 'required|integer|exists:users,id';
+        }
 
         $names = 
         [
@@ -110,6 +118,11 @@ class ResearcherWorkSpaceController extends Controller
             }
         }
 
+        if($request->status === "specific_users" && $request->user_id)
+        {
+            $project->users()->attach($request->user_id,['status' => 'allowed']);
+        }
+
 
         $project->categories()->attach($request->category_id);
 
@@ -145,11 +158,14 @@ class ResearcherWorkSpaceController extends Controller
         foreach ($project->categories as $item)
         {
             $categoryIds[] = $item->id;
-        } 
+        }
+        
+        $userIds = ProjectUsers::where('project_id',$id)->pluck('user_id')->toArray();
 
         $categories  = Category::get();
+        $users       = User::where('role_id',3)->get();
 
-        return view('researchers.workspaces.edit',compact(['project','categories','categoryIds']));
+        return view('researchers.workspaces.edit',compact(['project','categories','categoryIds','userIds','users']));
     }
 
     /**
@@ -177,6 +193,12 @@ class ResearcherWorkSpaceController extends Controller
             'description'      => 'Description',
             'category_id'      => 'Category',
         ];
+
+        if($request->status === "specific_users")
+        {
+            $rules['user_id']      = 'required|array';
+            $rules['user_id.*']    = 'required|integer|exists:users,id';
+        }
         
         $data = $this->validate($request, $rules , [],$names);
 
@@ -185,6 +207,15 @@ class ResearcherWorkSpaceController extends Controller
         $project = Project::find($id);
         
         $project->update($data);
+
+        if($request->status === "specific_users" && $request->user_id)
+        {
+            $project->users()->sync($request->user_id,['status' => 'allowed']);
+
+        }else{
+            
+            $project->users()->detach();
+        }
         
         $project->categories()->sync($request->category_id);
 

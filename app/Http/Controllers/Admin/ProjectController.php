@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Model\Category;
 use App\Model\ProjectCategory;
 use App\Model\ProjectFiles;
+use App\Model\ProjectUsers;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -21,10 +22,15 @@ class ProjectController extends Controller
         $this->middleware('permission:
         admin.projects.index|admin.projects.create|admin.projects.edit|admin.projects.destroy|
         admin.projects.files.index|admin.projects.files.create|admin.projects.files.edit|admin.projects.files.destroy',['only' => ['index','store']]);
+
         $this->middleware('permission:admin.projects.index', ['only' => ['index']]);
         $this->middleware('permission:admin.projects.create', ['only' => ['create','store']]);
         $this->middleware('permission:admin.projects.edit', ['only' => ['edit','update']]);
+
+        $this->middleware('permission:admin.projects.updatePermission', ['only' => ['store']]);
+
         $this->middleware('permission:admin.projects.destroy', ['only' => ['destroy']]);
+
         $this->middleware('permission:admin.projects.files.index', ['only' => ['index']]);
         $this->middleware('permission:admin.projects.files.create', ['only' => ['create','store']]);
         $this->middleware('permission:admin.projects.files.edit', ['only' => ['edit','update']]);
@@ -38,7 +44,8 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::get();
-        return view('admin.projects.index',compact('projects'));
+        $users = User::where('role_id',3)->get();
+        return view('admin.projects.index',compact(['projects','users']));
     }
 
     /**
@@ -72,13 +79,12 @@ class ProjectController extends Controller
             'project_files'    => 'required|array',
             'project_files.*'  => 'required|mimes:jpeg,png,jpg,gif,svg,pdf,csv,doc,docx,xls,xlsx,ppt|max:4096',
             'status'           => 'required|string|in:hidden,specific_users,all_users',
-            'user_id'          => 'nullable|array',
         ];
 
-        if($request->status === "specific_users" && $request->user_id)
+        if($request->status === "specific_users")
         {
-            $rule['user_id']      = 'required|array';
-            $rule['user_id.*']    = 'required_if:role_id,3|integer|exists:users,id';
+            $rules['user_id']      = 'required|array';
+            $rules['user_id.*']    = 'required|integer|exists:users,id';
         }
 
         $names = 
@@ -175,15 +181,19 @@ class ProjectController extends Controller
         $project = Project::with('categories')->find($id);
 
         $categoryIds = [];
+
         foreach ($project->categories as $item)
         {
             $categoryIds[] = $item->id;
-        } 
+        }
+
+        $userIds = ProjectUsers::where('project_id',$id)->pluck('user_id')->toArray();
 
         $researchers = User::where('role_id',2)->get();
+        $users       = User::where('role_id',3)->get();
         $categories  = Category::get();
 
-        return view('admin.projects.edit',compact(['project','researchers','categories','categoryIds']));
+        return view('admin.projects.edit',compact(['project','researchers','categories','categoryIds','userIds','users']));
     }
 
     /**
@@ -204,7 +214,14 @@ class ProjectController extends Controller
             'researcher_id'    => 'required_if:role_id,2|integer|exists:users,id',
             'category_id'      => 'required|array',
             'category_id.*'    => 'required|integer|exists:categories,id',
+            'status'           => 'required|string|in:hidden,specific_users,all_users',
         ];
+
+        if($request->status === "specific_users")
+        {
+            $rules['user_id']      = 'required|array';
+            $rules['user_id.*']    = 'required|integer|exists:users,id';
+        }
 
         $names = 
         [
@@ -212,15 +229,28 @@ class ProjectController extends Controller
             'description'      => 'Description',
             'researcher_id'    => 'Researcher',
             'category_id'      => 'Category',
+            'status'           => 'Status',
+            'user_id'          => 'User'
         ];
+
+        
         
         $data = $this->validate($request, $rules , [],$names);
 
-        $categoryIds[] = ProjectCategory::where('project_id',$id)->get();
 
         $project = Project::find($id);
         
         $project->update($data);
+
+        if($request->status === "specific_users" && $request->user_id)
+        {
+            $project->users()->sync($request->user_id,['status' => 'allowed']);
+
+        }else{
+            
+            $project->users()->detach();
+        }
+
         
         $project->categories()->sync($request->category_id);
 
@@ -252,6 +282,7 @@ class ProjectController extends Controller
         return redirect()->route('admin.projects.index')
                 ->with('success','Project deleted successfully');
     }
+
 
     public function indexProjectFiles($project_id)
     {
