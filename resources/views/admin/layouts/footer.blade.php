@@ -60,7 +60,7 @@
 <script src="{{url('admin_design')}}/js/data-table/colResizable-1.5.source.js"></script>
 <script src="{{url('admin_design')}}/js/data-table/bootstrap-table-export.js"></script>
 
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="{{url('admin_design')}}/jquery-ui.js"></script>
 
 <!-- main JS
 ============================================ -->

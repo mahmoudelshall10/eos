@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\Permission\Models\Role;
+use App\Model\ProjectUsers;
 
 class User extends Authenticatable
 {
@@ -44,4 +45,11 @@ class User extends Authenticatable
     {
         return $this->hasOne(Role::class,'id','role_id');
     }
+
+    public function manyProjects()
+    {
+        return $this->hasMany(ProjectUsers::class);
+    }
+
+
 }

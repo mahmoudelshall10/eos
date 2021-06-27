@@ -53,7 +53,7 @@
 <link rel="stylesheet" href="{{url('admin_design')}}/css/responsive.css">
 <!-- modernizr JS
     ============================================ -->
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="{{url('admin_design')}}/jquery-ui.css">
 
 @stack('admincss')
 

@@ -73,5 +73,16 @@ Route::group(['namespace' => 'Researcher' , 'prefix' => 'researcher' , 'as' => '
         Route::Delete('/{workspace_id}/files/{file_id}','ResearcherWorkSpaceController@deleteProjectFiles')->name('workspaces.files.destroy');
     });
 
-    Route::resource('/filespermissions','ResearcherFilePermissionController');
+
+    Route::prefix('filespermissions')->group(function (){
+        Route::get('permissions/{project_id}','ResearcherFilePermissionController@index')->name('filespermissions.index');
+        Route::get('permissions/{project_id}/create','ResearcherFilePermissionController@create')->name('filespermissions.create');
+        Route::post('permissions/{project_id}','ResearcherFilePermissionController@store')->name('filespermissions.store');
+        // Route::get('/{project_id}/edit','ResearcherFilePermissionController@edit')->name('filespermissions.edit');
+        // Route::patch('/{project_id}','ResearcherFilePermissionController@update')->name('filespermissions.update');
+        Route::Delete('permissions/{project_id}','ResearcherFilePermissionController@destroy')->name('filespermissions.destroy');
+
+        Route::post('/userpermission','ResearcherFilePermissionController@changePermission')->name('filespermissions.changePermission');
+    });
+
 });
