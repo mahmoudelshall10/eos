@@ -86,6 +86,7 @@ class ResearcherWorkSpaceController extends Controller
         $project->name          = $request->name;
         $project->description   = $request->description;
         $project->researcher_id = Auth::id();
+        $project->status        = $request->status;
         $project->uuid          = (string)Uuid::generate();
         $project->created_by    =  Auth::id();
         $project->save();
