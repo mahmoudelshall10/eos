@@ -17,11 +17,11 @@ class PermissionsTableSeeder extends Seeder
     public $researcher = [
         'home','workspaces.index','workspaces.create','workspaces.edit','workspaces.destroy',
         'workspaces.files.index','workspaces.files.create','workspaces.files.edit',
-        'workspaces.files.destroy','researcher.filespermissions.index'
-        ,'researcher.filespermissions.create'
-        ,'researcher.filespermissions.show'
-        ,'researcher.filespermissions.edit'
-        ,'researcher.filespermissions.destroy'
+        'workspaces.files.destroy','filespermissions.index'
+        ,'filespermissions.create'
+        ,'filespermissions.show'
+        ,'filespermissions.edit'
+        ,'filespermissions.destroy'
     ];
 
     public $user       = ['user.home'];
