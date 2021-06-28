@@ -18,6 +18,8 @@ class CreateProjectsTable extends Migration
             $table->string('name');
             $table->uuid('uuid')->nullable();
             $table->string('description');
+
+            $table->enum('status',['hidden','specific_users','all_users']);
             
             $table->unsignedBigInteger('researcher_id');
             $table->foreign('researcher_id')->references('id')->on('users')->onDelete('cascade');

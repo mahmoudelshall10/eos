@@ -12,7 +12,7 @@ class ProjectUsers extends Model
     [
         'project_id',
         'user_id',
-        // 'status'
+        'status'
     ];
 
     protected $primaryKey = ['project_id','user_id'];
