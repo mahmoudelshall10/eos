@@ -193,6 +193,7 @@ class ResearcherWorkSpaceController extends Controller
             'name'             => 'Name',
             'description'      => 'Description',
             'category_id'      => 'Category',
+            'category_id.*'    => 'Category'
         ];
 
         if($request->status === "specific_users")
