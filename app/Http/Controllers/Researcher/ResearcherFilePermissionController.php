@@ -13,10 +13,13 @@ class ResearcherFilePermissionController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:researcher.filespermissions.index|researcher.filespermissions.create|researcher.filespermissions.edit|researcher.filespermissions.destroy',['only' => ['index','store']]);
+        $this->middleware('permission:researcher.filespermissions.index|
+        researcher.filespermissions.create|
+        researcher.filespermissions.changePermission|
+        researcher.filespermissions.destroy',['only' => ['index','store']]);
         $this->middleware('permission:researcher.filespermissions.index', ['only' => ['index']]);
         $this->middleware('permission:researcher.filespermissions.create', ['only' => ['create','store']]);
-        $this->middleware('permission:researcher.filespermissions.edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:researcher.filespermissions.changePermission', ['only' => ['create','store']]);
         $this->middleware('permission:researcher.filespermissions.destroy', ['only' => ['destroy']]);
     }
 

@@ -19,9 +19,8 @@ class PermissionsTableSeeder extends Seeder
         'workspaces.files.index','workspaces.files.create','workspaces.files.edit',
         'workspaces.files.destroy','filespermissions.index'
         ,'filespermissions.create'
-        ,'filespermissions.show'
-        ,'filespermissions.edit'
         ,'filespermissions.destroy'
+        ,'filespermissions.changePermission'
     ];
 
     public $user       = ['user.home'];
