@@ -20,7 +20,7 @@ class ResearcherFilePermissionController extends Controller
         $this->middleware('permission:researcher.filespermissions.index', ['only' => ['index']]);
         $this->middleware('permission:researcher.filespermissions.create', ['only' => ['create','store']]);
         $this->middleware('permission:researcher.filespermissions.changePermission', ['only' => ['create','store']]);
-        $this->middleware('permission:researcher.filespermissions.destroy', ['only' => ['destroy']]);
+        // $this->middleware('permission:researcher.filespermissions.destroy', ['only' => ['destroy']]);
     }
 
     public function index($project_id)
@@ -68,17 +68,17 @@ class ResearcherFilePermissionController extends Controller
         return redirect()->route('researcher.filespermissions.index',$project_id)->with('success',' User permissions created successfully');
     }
 
-    public function destroy(Request $request,$project_id)
-    {
-        $user_email = $request->email;
-        $user_id = User::where('email',$user_email)->first()->id;
+    // public function destroy(Request $request,$project_id)
+    // {
+    //     $user_email = $request->email;
+    //     $user_id = User::where('email',$user_email)->first()->id;
 
-        $project = Project::find($project_id);
+    //     $project = Project::find($project_id);
 
-        $project->users()->detach($user_id);
+    //     $project->users()->detach($user_id);
 
-        return back()->with('success','Permissions deleted successfully');
-    }
+    //     return back()->with('success','Permissions deleted successfully');
+    // }
 
     public function changePermission(Request $request)
     {

@@ -15,7 +15,7 @@ class ProjectUsers extends Model
         'status'
     ];
 
-    protected $primaryKey = ['project_id','user_id'];
+    // protected $primaryKey = ['project_id','user_id'];
     public $incrementing = false;
 
     protected function setKeysForSaveQuery(Builder $query)

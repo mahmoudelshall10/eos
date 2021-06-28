@@ -32,9 +32,6 @@
             @can('researcher.filespermissions.changePermission')
                 <th scope="col">Change Permission</th>
             @endcan
-            @can('researcher.filespermissions.destroy')
-                <th scope="col">Delete Permission</th>
-            @endcan
         </tr>
         </thead>
         <tbody>
@@ -71,34 +68,6 @@
                             </div>
                         </td>
                      @endcan
-                     @can('researcher.filespermissions.destroy')
-                        <td>
-                            <a href="#deModaldelete{{$loop->index + 1}}" data-toggle="modal" class="btn btn-danger">Delete</a>
-                            <div class="modal fade" id="deModaldelete{{$loop->index + 1}}" role="dialog">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">Delete Confirmation</h5>
-                                                    <a class="close" data-dismiss="modal" href="#">
-                                                    <i class="fa fa-close"></i>
-                                                </a>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p>Are you sure you want to delete this record?</p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <form method="POST"  action="{{route('researcher.filespermissions.destroy',$project->project_id)}}">
-                                                @csrf
-                                                @method('Delete')
-                                                <input type="hidden" name="email" value="{{$project->user->email}}">
-                                                <button type="submit" class="btn btn-danger">Confirm</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-                    @endcan
                 </tr>
         @endforeach
         </tbody>

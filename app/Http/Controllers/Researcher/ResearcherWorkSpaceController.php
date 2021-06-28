@@ -61,8 +61,10 @@ class ResearcherWorkSpaceController extends Controller
             'description'      => 'required|string',
             'category_id'      => 'required|array',
             'category_id.*'    => 'required|integer|exists:categories,id',
+            'status'           => 'required|in:hidden,specific_users,all_users',
             'project_files'    => 'required|array',
-            'project_files.*'  => 'required|mimes:jpeg,png,jpg,gif,svg,pdf,csv,doc,docx,xls,xlsx,ppt|max:4096'
+            'project_files.*'  => 'required|mimes:jpeg,png,jpg,gif,svg,pdf,csv,doc,docx,xls,xlsx,ppt|max:4096',
+            'user_id'          => 'User'
         ];
 
         if($request->status === "specific_users")
@@ -77,6 +79,9 @@ class ResearcherWorkSpaceController extends Controller
             'description'      => 'Description',
             'category_id'      => 'Category',
             'project_files'    => 'Project Files',
+            'status'           => 'Status',
+            'user_id'          => 'User'
+
         ];
 
         $this->validate($request, $rules , [],$names);
@@ -186,6 +191,7 @@ class ResearcherWorkSpaceController extends Controller
             'description'      => 'required|string',
             'category_id'      => 'required|array',
             'category_id.*'    => 'required|integer|exists:categories,id',
+            'status'           => 'required|in:hidden,specific_users,all_users',
         ];
 
         $names = 
@@ -193,7 +199,8 @@ class ResearcherWorkSpaceController extends Controller
             'name'             => 'Name',
             'description'      => 'Description',
             'category_id'      => 'Category',
-            'category_id.*'    => 'Category'
+            'category_id.*'    => 'Category',
+            'status'           => 'Status'
         ];
 
         if($request->status === "specific_users")
@@ -207,12 +214,14 @@ class ResearcherWorkSpaceController extends Controller
         $categoryIds[] = ProjectCategory::where('project_id',$id)->get();
 
         $project = Project::find($id);
+
+        $data['status'] = $request->status;
         
         $project->update($data);
 
         if($request->status === "specific_users" && $request->user_id)
         {
-            $project->users()->sync($request->user_id,['status' => 'allowed']);
+            $project->users()->updateExistingPivot($request->user_id,['status' => 'allowed']);
 
         }else{
             

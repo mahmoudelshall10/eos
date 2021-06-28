@@ -73,7 +73,7 @@ class ProjectController extends Controller
         [
             'name'             => 'required|string',
             'description'      => 'required|string',
-            'researcher_id'    => 'required_if:role_id,2|integer|exists:users,id',
+            'researcher_id'    => 'required:role_id,2|integer|exists:users,id',
             'category_id'      => 'required|array',
             'category_id.*'    => 'required|integer|exists:categories,id',
             'project_files'    => 'required|array',
@@ -211,10 +211,11 @@ class ProjectController extends Controller
         [
             'name'             => 'required|string',
             'description'      => 'required|string',
-            'researcher_id'    => 'required_if:role_id,2|integer|exists:users,id',
+            'researcher_id'    => 'required:role_id,2|integer|exists:users,id',
             'category_id'      => 'required|array',
             'category_id.*'    => 'required|integer|exists:categories,id',
             'status'           => 'required|string|in:hidden,specific_users,all_users',
+            'user_id'          => 'User'
         ];
 
         if($request->status === "specific_users")
