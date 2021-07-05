@@ -54,6 +54,7 @@
     <script>
       $(document).ready( function () {
         $('#dynamic-table').DataTable();
+        $('.dataTables_paginate paging_simple_numbers').addClass('bs-select');
       });
     </script>
     @stack('sitejs')

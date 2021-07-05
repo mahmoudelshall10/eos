@@ -2,13 +2,24 @@
 @section('page-title') Search for {{ request()->search }} @endsection
 @section('content')
 
-<br>
+<table id="dynamic-table" class="table">
+    <thead>
+        <tr>
+            <th>Search for {{ request()->search }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach($projects as $project)
+        <tr>
+            <td>
+                <a href="{{route('singleProject',$project->uuid)}}">{{$project->name}}</a>
+            </td>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
 
 
-@foreach($projects as $project)
 
-    <a href="{{route('singleProject',$project->uuid)}}">{{$project->name}}</a>
-
-@endforeach
 
 @endsection

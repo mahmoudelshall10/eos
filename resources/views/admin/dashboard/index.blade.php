@@ -145,6 +145,61 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-lg-3">
+                <div class="income-dashone-total user-monthly shadow-reset nt-mg-b-30">
+                    <div class="income-title">
+                        <div class="main-income-head">
+                            <h2>Projects</h2>
+                        </div>
+                    </div>
+                    <div class="income-dashone-pro">
+                        <div class="income-rate-total">
+                            <div class="price-adminpro-rate">
+                                <h3><span class="counter">{{$projects}}</span></h3>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="income-dashone-total user-monthly shadow-reset nt-mg-b-30">
+                    <div class="income-title">
+                        <div class="main-income-head">
+                            <h2>Categories</h2>
+                        </div>
+                    </div>
+                    <div class="income-dashone-pro">
+                        <div class="income-rate-total">
+                            <div class="price-adminpro-rate">
+                                <h3><span class="counter">{{$categories}}</span></h3>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="col-lg-3">
+                <div class="income-dashone-total user-monthly shadow-reset nt-mg-b-30">
+                    <div class="income-title">
+                        <div class="main-income-head">
+                            <h2>Files</h2>
+                        </div>
+                    </div>
+                    <div class="income-dashone-pro">
+                        <div class="income-rate-total">
+                            <div class="price-adminpro-rate">
+                                <h3><span class="counter">{{$files}}</span></h3>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </div>
             
         </div>
     </div>

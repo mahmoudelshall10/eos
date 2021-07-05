@@ -32,6 +32,8 @@ class RoleController extends Controller
      */
     public function index(Request $request)
     {
+        // $role  = Role::where('id',1)->get()->except([1,2,3]);
+        // return $role;
         $roles = Role::orderBy('id','DESC')->paginate(5);
         return view('admin.roles.index',compact('roles'));
     }
@@ -138,10 +140,21 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // public function destroy($id)
-    // {
-    //     DB::table("roles")->where('id',$id)->delete();
-    //     return redirect()->route('admin.roles.index')
-    //                     ->with('success','Role deleted successfully');
-    // }
+    public function destroy($id)
+    {
+        $preventedDeletedIds = [1,2,3];
+
+        $role = Role::findorFail($id);
+        
+        if(in_array($id,$preventedDeletedIds))
+        {
+            return redirect()->route('admin.roles.index')
+                        ->with('error','You cannot remove it');
+        }else{
+
+            $role->delete();
+                return redirect()->route('admin.roles.index')
+                    ->with('success','Role deleted successfully');
+        }
+    }
 }
