@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
         Route::get('/','DashboardController@index')->name('dashboards.index');
         Route::resource('categories', 'CategoryController');
         Route::resource('permissions', 'PermissionController');
-        Route::resource('roles', 'RoleController');
+        Route::resource('roles', 'RoleController')->except(['destroy']);
         Route::resource('teams', 'TeamController');
         Route::resource('settings', 'SettingsController');
         

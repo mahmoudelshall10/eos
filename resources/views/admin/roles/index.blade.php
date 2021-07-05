@@ -56,32 +56,6 @@
                                             @can('admin.roles.edit')
                                                 <a href="{{route('admin.roles.edit',$role->id)}}"><i class="fa fa-pencil"></i></a>
                                             @endcan
-                                            @can('admin.roles.destroy')
-                                            <a href="#deModal{{$role->id}}" data-toggle="modal"><i class="fa fa-trash"></i></a>
-                                            <div class="modal fade" id="deModal{{$role->id}}" role="dialog">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title">Delete Confirmation
-                                                                 <a class="close" data-dismiss="modal" href="#">
-                                                                    <i class="fa fa-close"></i>
-                                                                </a>
-                                                            </h5>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <p>Are you sure you want to delete this record?</p>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <form method="POST"  action="{{route('admin.roles.destroy',$role->id)}}">
-                                                                @csrf
-                                                                @method('Delete')
-                                                                <button type="submit" class="btn btn-danger">Confirm</button>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                             @endcan
                                         </td>
                                     </tr>
                                     @endforeach
