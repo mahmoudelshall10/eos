@@ -6,11 +6,7 @@
     @include('site.projectSearch')
 
     @elseif($project->status === "specific_users")
-      @if(session()->has('permission'))
-
-        @include('site.projectSearch')
-        
-      @endif
+    @include('site.projectSearch')
     @endif
 
 

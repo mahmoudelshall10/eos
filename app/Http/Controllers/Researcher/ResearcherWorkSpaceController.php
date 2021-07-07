@@ -219,10 +219,20 @@ class ResearcherWorkSpaceController extends Controller
         
         $project->update($data);
 
+        
         if($request->status === "specific_users" && $request->user_id)
         {
-            $project->users()->updateExistingPivot($request->user_id,['status' => 'allowed']);
+            if(count($request->user_id) >= 1)
+            {
+                $project->users()->detach();
+                $project->users()->attach($request->user_id,['status' => 'allowed']);
 
+            }else{
+
+                $project->users()->updateExistingPivot($request->user_id,['status' => 'allowed']);
+            }
+
+            
         }else{
             
             $project->users()->detach();
